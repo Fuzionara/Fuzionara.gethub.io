@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fuzionara - Complete Portal</title>
+  <style>
+    :root {
+      --primary-color: rgba(204, 204, 204, 0.8);
+      --secondary-color: rgba(241, 241, 241, 0.8);
+      --hover-color: rgba(221, 221, 221, 0.8);
+      --font-family: Arial, sans-serif;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background-color: #f0f0f0;
+      color: #333;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+      position: relative;
+      width: 100%;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+
+    .fuzionara-text {
+      background: linear-gradient(90deg, #33ff49, #33c4ff, #c433ff, #ff5733);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    #google_translate_element {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+    }
+
+    #mic-button {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      background: transparent;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    /* Google Search Bar */
+    #google-search {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    #google-search input[type="text"] {
+      width: 300px;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    #google-search button {
+      padding: 8px;
+      border: none;
+      background-color: var(--primary-color);
+      border-radius: 4px;
+      cursor: pointer;
+      margin-left: 5px;
+    }
+
+    #image-search-form {
+      display: none;
+    }
+
+    /* Tabs Container */
+    .tabs-container {
+      width: 90%;
+      max-width: 1200px;
+      background-color: #222;
+      padding: 10px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .tab-button {
+      flex-grow: 1;
+      padding: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      color: white;
+      background: linear-gradient(145deg, #333, #444);
+      border: 2px solid #555;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+      text-transform: uppercase;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      min-width: 120px;
+    }
+
+    .tab-button.active {
+      background-color: #ff5733;
+      box-shadow: 0 6px 15px rgba(255, 87, 51, 0.5);
+      transform: scale(1.1);
+    }
+
+    .tab-button:hover {
+      background-color: #ff5733;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 16px rgba(255, 87, 51, 0.5);
+    }
+
+    .tab-content {
+      display: none;
+      border: 1px solid var(--primary-color);
+      padding: 20px;
+      background-color: #fff;
+      animation: fadeIn 0.3s;
+      text-align: center;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      .tab-button {
+        font-size: 12px;
+        padding: 10px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .tab-button {
+        font-size: 11px;
+        padding: 8px;
+      }
+    }
+  </style>
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'ar,bn,de,el,en,es,fr,hi,it,ja,ko,pt,ru,sw,ta,tr,ur,vi,zh-CN,zh-TW'
+      }, 'google_translate_element');
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const buttons = document.querySelectorAll(".tab-button");
+      const contents = document.querySelectorAll(".tab-content");
+
+      buttons.forEach((button, index) => {
+        button.addEventListener("click", function () {
+          buttons.forEach(btn => btn.classList.remove("active"));
+          contents.forEach(content => content.classList.remove("active"));
+
+          this.classList.add("active");
+          contents[index].classList.add("active");
+        });
+      });
+    });
+  </script>
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</head>
+<body>
+  <header>
+    <div id="google_translate_element"></div>
+    <h1><span class="fuzionara-text">Fuzionara</span></h1>
+    <button id="mic-button">🎤</button>
+
+    <!-- Google Search Bar -->
+    <div id="google-search">
+      <form id="text-search-form" method="get" action="https://www.google.com/search" target="_blank">
+        <input type="text" name="q" placeholder="Search Google..." id="google-search-input" />
+        <button type="submit">Search</button>
+        <button type="button" id="voice-search-button">🎙️</button>
+        <button type="button" id="camera-search-button">📷</button>
+      </form>
+    </div>
+  </header>
+
+  <!-- Tabs Section -->
+  <div class="tabs-container">
+    <div class="tabs">
+<p>&copy; 2025 Fuzionara - All Rights Reserved</p>
+    </div>
+  <footer>
+  </footer>
+</body>
+</html>
+    <div class="tabs-container">
+        <div class="tabs">
+            <button class="tab-button active" data-tab="AI-Tools">AI Tools</button>
+            <button class="tab-button" data-tab="Social-Media">Social Media</button>
+            <button class="tab-button" data-tab="News-Channels">News Channels</button>
+            <button class="tab-button" data-tab="Global-Banks">Global Banks</button>
+            <button class="tab-button" data-tab="Pakistani-Banks">Pakistani Banks</button>
+            <button class="tab-button" data-tab="Mobile-Wallets">Mobile Wallets</button>
+            <button class="tab-button" data-tab="Browsers">Browsers</button>
+            <button class="tab-button" data-tab="Azad-Kashmir">Azad Kashmir</button>
+            <button class="tab-button" data-tab="Online-Stores">Online Stores</button>
+            <button class="tab-button" data-tab="Sports-Channels">Sports Channels</button>
+            <button class="tab-button" data-tab="Image-Converters">Image Converters</button>
+            <button class="tab-button" data-tab="Technologies">Technologies</button>
+            <button class="tab-button" data-tab="Office-Email">Office & Email Software</button>
+            <button class="tab-button" data-tab="Editing-Software">Editing Software</button>
+            <button class="tab-button" data-tab="Remote-Software">Remote Software</button>
+            <button class="tab-button" data-tab="VPN">VPN Software</button>
+            <button class="tab-button" data-tab="Riders">Riders</button>
+            <button class="tab-button" data-tab="Darkweb">Darkweb</button>
+            <button class="tab-button" data-tab="Games">Games</button>
+            <button class="tab-button" data-tab="User-Guide">User Guide</button>
+        </div>
+</body>
+</html> 
+  <main>
+    <!-- AI Tools & Chatbots Section -->
+    <section id="AI-Tools" class="tab-content active">
+      <h2>AI Tools & Chatbots</h2>
+      <ul>
+        <li><strong>Qwen2.5Max:</strong> Large language model by Alibaba Cloud. <a href="https://chat.qwenlm.ai" target="_blank">Chat with Qwen2.5</a></li>
+        <li><strong>ChatGPT:</strong> Conversational AI by OpenAI. <a href="https://chat.openai.com/" target="_blank">Visit ChatGPT</a></li>
+        <li><strong>Bard:</strong> Google’s AI chatbot. <a href="https://bard.google.com/" target="_blank">Visit Bard</a></li>
+        <li><strong>DeepseekR1:</strong> Advanced AI tool for deep learning research. <a href="https://deepseek.com/" target="_blank">Visit Deepseek</a></li>
+        <li><strong>Claude:</strong> AI assistant by Anthropic. <a href="https://www.anthropic.com/" target="_blank">Visit Claude</a></li>
+        <li><strong>Gemini:</strong> Google’s multimodal AI model. <a href="https://gemini.google.com/" target="_blank">Visit Gemini</a></li>
+        <li><strong>Shodan:</strong> Search engine for internet-connected devices. <a href="https://www.shodan.io/" target="_blank">Visit Shodan</a></li>
+        <li><strong>Censys:</strong> Cybersecurity research tool. <a href="https://censys.io/" target="_blank">Visit Censys</a></li>
+        <li><strong>Zoomeye:</strong> Cyberspace search engine. <a href="https://www.zoomeye.org/" target="_blank">Visit Zoomeye</a></li>
+        <li><strong>BinaryEdge:</strong> Internet scanning for security risks. <a href="https://www.binaryedge.io/" target="_blank">Visit BinaryEdge</a></li>
+        <li><strong>Ernie Bot:</strong> AI chatbot by Baidu. <a href="https://www.baidu.com/" target="_blank">Visit Ernie Bot</a></li>
+        <li><strong>YouChat:</strong> AI chatbot by You.com. <a href="https://you.com/" target="_blank">Visit YouChat</a></li>
+        <li><strong>ChatSonic:</strong> AI chatbot by Writesonic. <a href="https://writesonic.com/chat" target="_blank">Visit ChatSonic</a></li>
+        <li><strong>Jasper Chat:</strong> AI chatbot by Jasper AI. <a href="https://www.jasper.ai/" target="_blank">Visit Jasper Chat</a></li>
+        <li><strong>Kami:</strong> Emerging conversational AI chatbot. <a href="https://www.kamiapp.com/" target="_blank">Visit Kami</a></li>
+      </ul>
+<ul>
+    <li>
+        <a href="https://grok3.io/" target="_blank">Grok 3</a>: 
+        Grok 3 is an AI-powered platform built for the decentralized finance (DeFi) ecosystem. It leverages artificial intelligence to provide advanced tools for crypto trading, optimizing strategies and enhancing predictive analytics for crypto investors. The platform operates on the Solana blockchain, known for its high-speed transactions and scalability. Grok 3 aims to revolutionize the way people interact with crypto markets by integrating deep learning models and offering real-time insights.
+    </li>
+</ul>
+
+    </section>
+    
+    <!-- Social Media Section -->
+    <section id="Social-Media" class="tab-content">
+      <h2>Social Media</h2>
+      <ul>
+        <li><strong>Facebook:</strong> Global social networking platform. <a href="https://www.facebook.com/" target="_blank">Visit Facebook</a></li>
+        <li><strong>YouTube:</strong> Video sharing platform. <a href="https://www.youtube.com/" target="_blank">Visit YouTube</a></li>
+        <li><strong>WhatsApp:</strong> Messaging and calling app. <a href="https://www.whatsapp.com/" target="_blank">Visit WhatsApp</a></li>
+        <li><strong>Instagram:</strong> Photo and video sharing service. <a href="https://www.instagram.com/" target="_blank">Visit Instagram</a></li>
+        <li><strong>TikTok:</strong> Short video sharing platform. <a href="https://www.tiktok.com/" target="_blank">Visit TikTok</a></li>
+        <li><strong>Snapchat:</strong> Multimedia messaging app. <a href="https://www.snapchat.com/" target="_blank">Visit Snapchat</a></li>
+        <li><strong>Twitter (X):</strong> Microblogging platform for real-time news. <a href="https://twitter.com/" target="_blank">Visit Twitter</a></li>
+        <li><strong>LinkedIn:</strong> Professional networking platform. <a href="https://www.linkedin.com/" target="_blank">Visit LinkedIn</a></li>
+        <li><strong>Pinterest:</strong> Visual discovery engine. <a href="https://www.pinterest.com/" target="_blank">Visit Pinterest</a></li>
+        <li><strong>Reddit:</strong> Community-driven discussion platform. <a href="https://www.reddit.com/" target="_blank">Visit Reddit</a></li>
+        <li><strong>WeChat:</strong> Multi-purpose messaging & social app. <a href="https://www.wechat.com/" target="_blank">Visit WeChat</a></li>
+        <li><strong>QQ:</strong> Instant messaging service. <a href="https://im.qq.com/" target="_blank">Visit QQ</a></li>
+        <li><strong>Sina Weibo:</strong> Chinese microblogging platform. <a href="https://www.weibo.com/" target="_blank">Visit Sina Weibo</a></li>
+        <li><strong>Telegram:</strong> Secure messaging and social platform. <a href="https://telegram.org/" target="_blank">Visit Telegram</a></li>
+        <li><strong>VKontakte (VK):</strong> Russian social network. <a href="https://vk.com/" target="_blank">Visit VK</a></li>
+        <li><strong>Douyin:</strong> Chinese short video platform. <a href="https://www.douyin.com/" target="_blank">Visit Douyin</a></li>
+        <li><strong>Line:</strong> Messaging app popular in Asia. <a href="https://line.me/" target="_blank">Visit Line</a></li>
+        <li><strong>Viber:</strong> Messaging and VoIP app. <a href="https://www.viber.com/" target="_blank">Visit Viber</a></li>
+        <li><strong>Discord:</strong> Community chat platform for gamers. <a href="https://discord.com/" target="_blank">Visit Discord</a></li>
+        <li><strong>Tumblr:</strong> Blogging and social networking platform. <a href="https://www.tumblr.com/" target="_blank">Visit Tumblr</a></li>
+      </ul>
+    </section>
+    
+    <!-- News Channels Section -->
+    <section id="News-Channels" class="tab-content">
+      <h2>News Channels</h2>
+      <h3>International News Channels</h3>
+      <ul>
+        <ul>
+    <li><a href="https://www.bbc.com/news" target="_blank">BBC News</a></li>
+    <li><a href="https://edition.cnn.com" target="_blank">CNN International</a></li>
+    <li><a href="https://www.aljazeera.com" target="_blank">Al Jazeera English</a></li>
+    <li><a href="https://news.sky.com" target="_blank">Sky News</a></li>
+    <li><a href="https://www.foxnews.com" target="_blank">Fox News</a></li>
+    <li><a href="https://www.msnbc.com" target="_blank">MSNBC</a></li>
+    <li><a href="https://www.france24.com" target="_blank">France 24</a></li>
+    <li><a href="https://www.dw.com" target="_blank">Deutsche Welle (DW)</a></li>
+    <li><a href="https://www.rt.com" target="_blank">RT (Russia Today)</a></li>
+    <li><a href="https://www.euronews.com" target="_blank">Euronews</a></li>
+    <li><a href="https://www.cnbc.com" target="_blank">CNBC</a></li>
+    <li><a href="https://www.bloomberg.com" target="_blank">Bloomberg Television</a></li>
+    <li><a href="https://abcnews.go.com" target="_blank">ABC News (US)</a></li>
+    <li><a href="https://www.cbsnews.com" target="_blank">CBS News</a></li>
+    <li><a href="https://www.nbcnews.com" target="_blank">NBC News</a></li>
+    <li><a href="https://english.alarabiya.net" target="_blank">Al Arabiya</a></li>
+    <li><a href="https://trtworld.com" target="_blank">TRT World</a></li>
+    <li><a href="https://www3.nhk.or.jp/nhkworld" target="_blank">NHK World-Japan</a></li>
+    <li><a href="https://www.arirang.com" target="_blank">Arirang News (South Korea)</a></li>
+    <li><a href="https://www.cbc.ca/news" target="_blank">CBC News (Canada)</a></li>
+    <li><a href="https://www.ctvnews.ca" target="_blank">CTV News (Canada)</a></li>
+    <li><a href="https://www.channelnewsasia.com" target="_blank">Channel NewsAsia (Singapore)</a></li>
+    <li><a href="https://www.presstv.ir" target="_blank">Press TV (Iran)</a></li>
+    <li><a href="https://www.cgtn.com" target="_blank">CGTN (China Global Television Network)</a></li>
+    <li><a href="https://www.ndtv.com" target="_blank">NDTV 24x7 (India)</a></li>
+    <li><a href="https://www.republicworld.com" target="_blank">Republic TV (India)</a></li>
+    <li><a href="https://www.timesnownews.com" target="_blank">Times Now (India)</a></li>
+    <li><a href="https://www.indiatoday.in" target="_blank">India Today (India)</a></li>
+    <li><a href="https://www.channel4.com/news" target="_blank">Channel 4 News (UK)</a></li>
+    <li><a href="https://www.skynewsarabia.com" target="_blank">Sky News Arabia (UAE)</a></li>
+    <li><a href="https://www.almayadeen.net" target="_blank">Al Mayadeen (Lebanon)</a></li>
+    <li><a href="https://www.rainews.it" target="_blank">RAI News24 (Italy)</a></li>
+    <li><a href="https://tg24.sky.it" target="_blank">Sky TG24 (Italy)</a></li>
+    <li><a href="https://www.tvnz.co.nz" target="_blank">One News (New Zealand)</a></li>
+    <li><a href="https://www.abc.net.au/news" target="_blank">ABC News Australia</a></li>
+    <li><a href="https://www.rte.ie/news" target="_blank">RTÉ News Now (Ireland)</a></li>
+    <li><a href="https://www.alhurra.com" target="_blank">Alhurra (US-based Arabic)</a></li>
+    <li><a href="https://www.telesurtv.net" target="_blank">TeleSUR (Latin America)</a></li>
+    <li><a href="https://www.i24news.tv" target="_blank">i24NEWS International (Israel/France)</a></li>
+    <li><a href="https://www.trthaber.com" target="_blank">TRT Haber (Turkey)</a></li>
+</ul>
+
+<!-- Pakistani News Channels -->
+<ul>
+    <li><a href="https://www.geo.tv" target="_blank">Geo News</a></li>
+    <li><a href="https://arynews.tv" target="_blank">ARY News</a></li>
+    <li><a href="https://www.expressnews.tv" target="_blank">Express News</a></li>
+    <li><a href="https://dunyanews.tv" target="_blank">Dunya News</a></li>
+    <li><a href="https://www.samaa.tv" target="_blank">Samaa TV</a></li>
+    <li><a href="https://bolnews.com" target="_blank">Bol News</a></li>
+    <li><a href="https://92newshd.tv" target="_blank">92 News HD</a></li>
+    <li><a href="https://www.ptv.com.pk" target="_blank">PTV News</a></li>
+    <li><a href="https://www.hum.tv" target="_blank">Hum News</a></li>
+    <li><a href="https://www.abbtakk.tv" target="_blank">Abb Takk News</a></li>
+</ul>
+    <li><a href="https://www.theverge.com" target="_blank">The Verge</a>: Provides news and analysis on technology, science, art, and culture.</li>
+    <li><a href="https://www.wired.com" target="_blank">WIRED</a>: Covers technology, science, and future trends with in-depth articles and reports.</li>
+    <li><a href="https://www.cnet.com" target="_blank">CNET</a>: Offers reviews, news, and guides on technology products.</li>
+    <li><a href="https://www.techcrunch.com" target="_blank">TechCrunch</a>: Focuses on technology startups, venture capital, and Silicon Valley news.</li>
+    <li><a href="https://www.engadget.com" target="_blank">Engadget</a>: Covers gadgets, consumer electronics, and the latest technology news.</li>
+    <li><a href="https://www.gizmodo.com" target="_blank">Gizmodo</a>: Provides news and analysis on technology, design, and science.</li>
+    <li><a href="https://www.mashable.com" target="_blank">Mashable</a>: Covers technology, digital culture, and entertainment trends.</li>
+    <li><a href="https://www.zdnet.com" target="_blank">ZDNet</a>: Offers technology news, analysis, and research for IT professionals.</li>
+    <li><a href="https://www.arstechnica.com" target="_blank">Ars Technica</a>: Provides news and analysis on technology, science, and IT policies.</li>
+    <li><a href="https://www.bbc.com/news/technology" target="_blank">BBC News - Technology</a>: Covers the latest technology news and innovations.</li>
+</ul>
+    </section>
+    
+    <!-- Global Banks Section -->
+    <section id="Global-Banks" class="tab-content">
+      <h2>Global Banks (International)</h2>
+     <ul>
+    <li><a href="https://www.jpmorganchase.com" target="_blank">JPMorgan Chase</a></li>
+    <li><a href="https://www.bankofamerica.com" target="_blank">Bank of America</a></li>
+    <li><a href="https://www.citigroup.com" target="_blank">Citigroup</a></li>
+    <li><a href="https://www.wellsfargo.com" target="_blank">Wells Fargo</a></li>
+    <li><a href="https://www.hsbc.com" target="_blank">HSBC</a></li>
+    <li><a href="https://group.bnpparibas" target="_blank">BNP Paribas</a></li>
+    <li><a href="https://www.santander.com" target="_blank">Santander</a></li>
+    <li><a href="https://www.db.com" target="_blank">Deutsche Bank</a></li>
+    <li><a href="https://www.ubs.com" target="_blank">UBS</a></li>
+    <li><a href="https://www.barclays.co.uk" target="_blank">Barclays</a></li>
+    <li><a href="https://www.credit-suisse.com" target="_blank">Credit Suisse</a></li>
+    <li><a href="https://www.societegenerale.com" target="_blank">Société Générale</a></li>
+    <li><a href="https://www.ing.com" target="_blank">ING Group</a></li>
+    <li><a href="https://www.rbc.com" target="_blank">Royal Bank of Canada</a></li>
+    <li><a href="https://www.td.com" target="_blank">Toronto-Dominion Bank</a></li>
+    <li><a href="https://www.mufg.jp/english" target="_blank">Mitsubishi UFJ Financial Group</a></li>
+    <li><a href="https://www.smbc.co.jp" target="_blank">Sumitomo Mitsui Banking Corporation</a></li>
+    <li><a href="https://www.mizuho-fg.co.jp" target="_blank">Mizuho Financial Group</a></li>
+    <li><a href="https://www.icbc.com.cn" target="_blank">ICBC</a></li>
+    <li><a href="https://www.ccb.com" target="_blank">China Construction Bank</a></li>
+    <li><a href="http://www.abchina.com" target="_blank">Agricultural Bank of China</a></li>
+    <li><a href="http://www.bankofchina.com" target="_blank">Bank of China</a></li>
+    <li><a href="http://www.cdb.com.cn" target="_blank">China Development Bank</a></li>
+    <li><a href="https://www.standardchartered.com" target="_blank">Standard Chartered</a></li>
+    <li><a href="https://www.unicreditgroup.eu" target="_blank">UniCredit</a></li>
+    <li><a href="https://www.credit-agricole.com" target="_blank">Crédit Agricole</a></li>
+    <li><a href="https://www.rabobank.com" target="_blank">Rabobank</a></li>
+    <li><a href="https://www.nordea.com" target="_blank">Nordea</a></li>
+    <li><a href="https://www.danskebank.com" target="_blank">Danske Bank</a></li>
+    <li><a href="https://www.bmo.com" target="_blank">Bank of Montreal</a></li>
+</ul>     
+    </section>
+    
+    <!-- Pakistani Banks Section -->
+    <section id="Pakistani-Banks" class="tab-content">
+      <h2>Pakistani Banks</h2>
+      <ul>
+        <ul><a href="https://www.hbl.com" target="_blank">Habib Bank Limited (HBL)</a></li>
+        <li><a href="https://www.ubldigital.com" target="_blank">United Bank Limited (UBL)</a></li>
+        <li><a href="https://www.meezanbank.com" target="_blank">Meezan Bank</a></li>
+        <li><a href="https://www.nbp.com.pk" target="_blank">National Bank of Pakistan (NBP)</a></li>
+        <li><a href="https://www.bankalfalah.com" target="_blank">Bank Alfalah</a></li>
+        <li><a href="https://www.faysalbank.com" target="_blank">Faysal Bank</a></li>
+        <li><a href="https://www.mcb.com.pk" target="_blank">MCB Bank</a></li>
+        <li><a href="https://www.sc.com/pk" target="_blank">Standard Chartered Pakistan</a></li>
+        <li><a href="https://www.askaribank.com.pk" target="_blank">Askari Bank</a></li>
+        <li><a href="https://www.abl.com" target="_blank">Allied Bank Limited (ABL)</a></li>
+    </ul>
+    </section> 
+    <!-- Mobile Wallets Section -->
+    <section id="Mobile-Wallets" class="tab-content">
+      <h2>Mobile Wallets</h2>
+      <h3>Global Mobile Wallets (15)</h3>
+      <ul>
+        <li><strong>Alipay:</strong> <a href="https://www.alipay.com/" target="_blank">Visit Alipay</a></li>
+        <li><strong>WeChat Pay:</strong> <a href="https://pay.weixin.qq.com/" target="_blank">Visit WeChat Pay</a></li>
+        <li><strong>PayPal:</strong> <a href="https://www.paypal.com/" target="_blank">Visit PayPal</a></li>
+        <li><strong>Apple Pay:</strong> <a href="https://www.apple.com/apple-pay/" target="_blank">Visit Apple Pay</a></li>
+        <li><strong>Google Pay:</strong> <a href="https://pay.google.com/" target="_blank">Visit Google Pay</a></li>
+        <li><strong>Samsung Pay:</strong> <a href="https://www.samsung.com/global/galaxy/samsung-pay/" target="_blank">Visit Samsung Pay</a></li>
+        <li><strong>Paytm:</strong> <a href="https://paytm.com/" target="_blank">Visit Paytm</a></li>
+        <li><strong>M-Pesa:</strong> <a href="https://www.safaricom.co.ke/mpesa" target="_blank">Visit M-Pesa</a></li>
+        <li><strong>Venmo:</strong> <a href="https://venmo.com/" target="_blank">Visit Venmo</a></li>
+        <li><strong>Cash App:</strong> <a href="https://cash.app/" target="_blank">Visit Cash App</a></li>
+        <li><strong>Amazon Pay:</strong> <a href="https://pay.amazon.com/" target="_blank">Visit Amazon Pay</a></li>
+        <li><strong>Skrill:</strong> <a href="https://www.skrill.com/" target="_blank">Visit Skrill</a></li>
+        <li><strong>Neteller:</strong> <a href="https://www.neteller.com/" target="_blank">Visit Neteller</a></li>
+        <li><strong>PhonePe:</strong> <a href="https://www.phonepe.com/" target="_blank">Visit PhonePe</a></li>
+        <li><strong>GrabPay:</strong> <a href="https://www.grab.com/" target="_blank">Visit GrabPay</a></li>
+      </ul>
+      <h3>Pakistani Mobile Wallets (5)</h3>
+      <ul>
+        <li><strong>Easypaisa:</strong> <a href="https://www.easypaisa.com.pk/" target="_blank">Visit Easypaisa</a></li>
+        <li><strong>JazzCash:</strong> <a href="https://www.jazzcash.com.pk/" target="_blank">Visit JazzCash</a></li>
+        <li><strong>Upaisa:</strong> <a href="https://www.upaisa.com.pk/" target="_blank">Visit Upaisa</a></li>
+        <li><strong>HBL Konnect:</strong> <a href="https://www.hbl.com/" target="_blank">Visit HBL Konnect</a></li>
+        <li><strong>UBL Omni:</strong> <a href="https://www.ubl.com.pk/" target="_blank">Visit UBL Omni</a></li>
+      </ul>
+    </section>
+    
+    <!-- Browsers Section -->
+    <section id="Browsers" class="tab-content">
+      <h2>Browsers</h2>
+      <ul>
+        <li><strong>Google Chrome:</strong> <a href="https://www.google.com/chrome/" target="_blank">Visit Chrome</a></li>
+        <li><strong>Mozilla Firefox:</strong> <a href="https://www.mozilla.org/firefox/" target="_blank">Visit Firefox</a></li>
+        <li><strong>Microsoft Edge:</strong> <a href="https://www.microsoft.com/edge" target="_blank">Visit Edge</a></li>
+        <li><strong>Safari:</strong> <a href="https://www.apple.com/safari/" target="_blank">Visit Safari</a></li>
+        <li><strong>Opera:</strong> <a href="https://www.opera.com/" target="_blank">Visit Opera</a></li>
+        <li><strong>Brave:</strong> <a href="https://brave.com/" target="_blank">Visit Brave</a></li>
+        <li><strong>Vivaldi:</strong> <a href="https://vivaldi.com/" target="_blank">Visit Vivaldi</a></li>
+        <li><strong>Internet Explorer:</strong> <a href="https://www.microsoft.com/ie/" target="_blank">Visit IE</a></li>
+        <li><strong>UC Browser:</strong> <a href="https://www.ucweb.com/" target="_blank">Visit UC Browser</a></li>
+        <li><strong>Yandex Browser:</strong> <a href="https://browser.yandex.com/" target="_blank">Visit Yandex</a></li>
+        <li><strong>Samsung Internet Browser:</strong> <a href="https://www.samsung.com/global/galaxy/apps/samsung-internet/" target="_blank">Visit Samsung Internet</a></li>
+        <li><strong>Opera Touch:</strong> <a href="https://www.opera.com/touch" target="_blank">Visit Opera Touch</a></li>
+        <li><strong>Dolphin Browser:</strong> <a href="http://www.dolphin.com/" target="_blank">Visit Dolphin</a></li>
+        <li><strong>Epic Privacy Browser:</strong> <a href="https://www.epicbrowser.com/" target="_blank">Visit Epic</a></li>
+        <li><strong>Maxthon:</strong> <a href="https://www.maxthon.com/" target="_blank">Visit Maxthon</a></li>
+        <li><strong>Comodo Dragon:</strong> <a href="https://www.comodo.com/home/browsers-toolbars/dragon-browser.php" target="_blank">Visit Comodo Dragon</a></li>
+        <li><strong>SRWare Iron:</strong> <a href="https://www.srware.net/iron/" target="_blank">Visit SRWare Iron</a></li>
+        <li><strong>SeaMonkey:</strong> <a href="https://www.seamonkey-project.org/" target="_blank">Visit SeaMonkey</a></li>
+        <li><strong>Waterfox:</strong> <a href="https://www.waterfox.net/" target="_blank">Visit Waterfox</a></li>
+        <li><strong>Pale Moon:</strong> <a href="https://www.palemoon.org/" target="_blank">Visit Pale Moon</a></li>
+        <li><strong>Cent Browser:</strong> <a href="http://www.centbrowser.com/" target="_blank">Visit Cent Browser</a></li>
+        <li><strong>K-Meleon:</strong> <a href="http://kmeleonbrowser.org/" target="_blank">Visit K-Meleon</a></li>
+        <li><strong>Midori:</strong> <a href="https://www.midori-browser.org/" target="_blank">Visit Midori</a></li>
+        <li><strong>Avant Browser:</strong> <a href="http://www.avantbrowser.com/" target="_blank">Visit Avant</a></li>
+        <li><strong>Basilisk:</strong> <a href="https://basilisk-browser.org/" target="_blank">Visit Basilisk</a></li>
+        <li><strong>Lunascape:</strong> <a href="https://www.lunascape.tv/" target="_blank">Visit Lunascape</a></li>
+        <li><strong>Dooble:</strong> <a href="https://dooble.sourceforge.io/" target="_blank">Visit Dooble</a></li>
+        <li><strong>Otter Browser:</strong> <a href="https://otter-browser.org/" target="_blank">Visit Otter Browser</a></li>
+        <li><strong>Sleipnir:</strong> <a href="https://www.kagi.com/sleipnir/" target="_blank">Visit Sleipnir</a></li>
+        <li><strong>Coc Coc:</strong> <a href="https://www.coccoc.com/" target="_blank">Visit Coc Coc</a></li>
+        <li><strong>Sogou Explorer:</strong> <a href="https://ie.sogou.com/" target="_blank">Visit Sogou</a></li>
+        <li><strong>QQ Browser:</strong> <a href="https://browser.qq.com/" target="_blank">Visit QQ Browser</a></li>
+        <li><strong>Baidu Browser:</strong> <a href="http://liulanqi.baidu.com/" target="_blank">Visit Baidu Browser</a></li>
+        <li><strong>Puffin Browser:</strong> <a href="https://www.puffinbrowser.com/" target="_blank">Visit Puffin</a></li>
+        <li><strong>Torch Browser:</strong> <a href="https://torchbrowser.com/" target="_blank">Visit Torch</a></li>
+        <li><strong>IceDragon:</strong> <a href="https://www.comodo.com/home/browsers-toolbars/icedragon-browser.php" target="_blank">Visit IceDragon</a></li>
+        <li><strong>Lynx:</strong> <a href="http://lynx.browser.org/" target="_blank">Visit Lynx</a></li>
+        <li><strong>Links:</strong> <a href="http://links.twibright.com/" target="_blank">Visit Links</a></li>
+        <li><strong>Dillo:</strong> <a href="http://www.dillo.org/" target="_blank">Visit Dillo</a></li>
+       <ul>
+    <li>
+        <a href="https://en.wikipedia.org/wiki/NetCaptor" target="_blank">NetCaptor</a>: 
+        A classic web browser for Windows that was one of the first to introduce tabbed browsing before it became a standard feature in major browsers.
+    </li>
+        <a href="https://en.wikipedia.org/wiki/Flock_(web_browser)" target="_blank">Flock</a>: 
+        A former social web browser that integrated social media features, discontinued in 2011.
+        <li><strong>CometBird:</strong> Customized Firefox-based browser (discontinued).</li>
+        <li><strong>Xombrero:</strong> Minimalist browser for security. <a href="http://xombrero.org/" target="_blank">Visit Xombrero</a></li>
+        <li><strong>Falkon:</strong> Open-source browser formerly known as QupZilla. <a href="https://www.falkon.org/" target="_blank">Visit Falkon</a></li>
+        <li><strong>Opera Neon:</strong> Experimental browser by Opera. <a href="https://www.opera.com/computer/neon" target="_blank">Visit Opera Neon</a></li>
+        <li><strong>UR Browser:</strong> Privacy-focused Chromium browser. <a href="https://www.ur-browser.com/" target="_blank">Visit UR Browser</a></li>
+        <li><strong>Tor Browser:</strong> Browser for anonymous browsing via Tor. <a href="https://www.torproject.org/" target="_blank">Visit Tor</a></li>
+        <li><strong>Kiwi Browser:</strong> Chromium-based mobile browser with extensions. <a href="https://kiwibrowser.com/" target="_blank">Visit Kiwi Browser</a></li>
+        <li><strong>LibreWolf:</strong> Privacy-focused Firefox fork. <a href="https://librewolf.net/" target="_blank">Visit LibreWolf</a></li>
+        <li><strong>Avast Secure Browser:</strong> Security-enhanced browser by Avast. <a href="https://www.avast.com/secure-browser" target="_blank">Visit Avast Secure Browser</a></li>
+      </ul>
+    </section>
+    
+    <!-- Azad Kashmir Section -->
+    <section id="Azad-Kashmir" class="tab-content">
+      <h2>Azad Kashmir</h2>
+      <ul>
+        <li>
+          <strong>District:</strong> Neelum Valley
+          <ul>
+            <li>
+              <strong>Place:</strong> Denger
+              <ul>
+                <li><strong>Village:</strong> Mughal Mohallah</li>
+              </ul>
+            </li>
+            <li>
+              <strong>Place:</strong> Sharda<br>
+              <strong>Description:</strong> A historical site famous for its ancient temple and scenic beauty.
+            </li>
+            <li>
+              <strong>Place:</strong> Kel<br>
+              <strong>Description:</strong> A picturesque town known for lush landscapes and nearby Arang Kel village.
+            </li>
+            <li>
+              <strong>Place:</strong> Taobat<br>
+              <strong>Description:</strong> A serene village offering breathtaking mountain and river views.
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong>District:</strong> Muzaffarabad
+          <ul>
+            <li>
+              <strong>Place:</strong> Red Fort<br>
+              <strong>Description:</strong> A historical fort known for its architectural significance and panoramic views.
+            </li>
+            <li>
+              <strong>Place:</strong> Pir Chinasi<br>
+              <strong>Description:</strong> A popular hill station offering stunning views and a peaceful environment.
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong>District:</strong> Mirpur
+          <ul>
+            <li>
+              <strong>Place:</strong> Mangla Dam<br>
+              <strong>Description:</strong> One of Pakistan’s largest dams providing hydroelectric power and water storage.
+            </li>
+            <li>
+              <strong>Place:</strong> Bhimber<br>
+              <strong>Description:</strong> A historical city known for its ancient forts and cultural heritage.
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong>District:</strong> Bagh
+          <ul>
+            <li>
+              <strong>Place:</strong> Bagh Fort<br>
+              <strong>Description:</strong> A historical fort that highlights the region's rich history.
+            </li>
+            <li>
+              <strong>Place:</strong> Dhirkot<br>
+              <strong>Description:</strong> A scenic village known for its natural beauty and hiking trails.
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+    
+    <!-- Online Stores Section -->
+    <section id="Online-Stores" class="tab-content">
+      <h2>Online Stores</h2>
+      <h3>International Online Stores</h3>
+      <ul>
+        <li><strong>Amazon:</strong> World's largest online marketplace. <a href="https://www.amazon.com/" target="_blank">Visit Amazon</a></li>
+        <li><strong>eBay:</strong> Global marketplace for buying and selling. <a href="https://www.ebay.com/" target="_blank">Visit eBay</a></li>
+        <li><strong>Alibaba:</strong> Leading B2B marketplace for manufacturers. <a href="https://www.alibaba.com/" target="_blank">Visit Alibaba</a></li>
+        <li><strong>AliExpress:</strong> Consumer marketplace by Alibaba Group. <a href="https://www.aliexpress.com/" target="_blank">Visit AliExpress</a></li>
+        <li><strong>Walmart:</strong> Leading US retail giant’s online store. <a href="https://www.walmart.com/" target="_blank">Visit Walmart</a></li>
+        <li><strong>Etsy:</strong> Marketplace for handmade, vintage, and craft items. <a href="https://www.etsy.com/" target="_blank">Visit Etsy</a></li>
+        <li><strong>Rakuten:</strong> Japanese online retailer with a global presence. <a href="https://global.rakuten.com/" target="_blank">Visit Rakuten</a></li>
+        <li><strong>ASOS:</strong> Popular online fashion retailer. <a href="https://www.asos.com/" target="_blank">Visit ASOS</a></li>
+        <li><strong>Zalando:</strong> European fashion and lifestyle store. <a href="https://www.zalando.com/" target="_blank">Visit Zalando</a></li>
+      </ul>
+      <h3>Pakistani Online Stores</h3>
+      <ul>
+        <li><strong>Daraz:</strong> Pakistan's largest e-commerce platform. <a href="https://www.daraz.pk/" target="_blank">Visit Daraz</a></li>
+        <li><strong>Yayvo:</strong> Fast-growing online store in Pakistan. <a href="https://yayvo.com/" target="_blank">Visit Yayvo</a></li>
+        <li><strong>HomeShopping:</strong> Online store for various products. <a href="https://www.homeshopping.pk/" target="_blank">Visit HomeShopping</a></li>
+        <li><strong>Telemart:</strong> Pakistani online retailer offering a range of products. <a href="https://www.telemart.pk/" target="_blank">Visit Telemart</a></li>
+        <li><strong>Shophive:</strong> Online shopping platform in Pakistan. <a href="https://www.shophive.com/" target="_blank">Visit Shophive</a></li>
+      </ul>
+    </section>
+    
+    <!-- Sports Channels Section -->
+    <section id="Sports-Channels" class="tab-content">
+      <h2>Sports Channels</h2>
+      <ul>
+        <li><strong>ESPN:</strong> Leading global sports channel. <a href="https://www.espn.com/" target="_blank">Visit ESPN</a></li>
+        <li><strong>Sky Sports:</strong> UK-based live sports channel. <a href="https://www.skysports.com/" target="_blank">Visit Sky Sports</a></li>
+        <li><strong>Fox Sports:</strong> International sports network. <a href="https://www.foxsports.com/" target="_blank">Visit Fox Sports</a></li>
+        <li><strong>beIN Sports:</strong> Global sports network focused on football. <a href="https://www.beinsports.com/" target="_blank">Visit beIN Sports</a></li>
+        <li><strong>Star Sports:</strong> Popular sports channel network in South Asia. <a href="https://www.starsports.com/" target="_blank">Visit Star Sports</a></li>
+        <li><strong>BT Sport:</strong> British channel with live events and news. <a href="https://www.bt.com/sport" target="_blank">Visit BT Sport</a></li>
+        <li><strong>NBC Sports:</strong> American sports channel. <a href="https://www.nbcsports.com/" target="_blank">Visit NBC Sports</a></li>
+        <li><strong>Eurosport:</strong> Pan-European live sports channel. <a href="https://www.eurosport.com/" target="_blank">Visit Eurosport</a></li>
+        <li><strong>Geo Super:</strong> Pakistan's leading sports channel. <a href="https://www.geosuper.tv/" target="_blank">Visit Geo Super</a></li>
+        <li><strong>PTV Sports:</strong> Official sports channel of Pakistan Television Corporation. <a href="http://ptv.gov.pk/sports" target="_blank">Visit PTV Sports</a></li>
+        <li><strong>Express Sports:</strong> Sports channel by Express Group. <a href="https://www.express.pk/" target="_blank">Visit Express Sports</a></li>
+        <li><strong>ESPN Player:</strong> Live streaming service for sports events. <a href="https://www.espn.com/watch/" target="_blank">Visit ESPN Player</a></li>
+        <li><strong>Sky Sports Live:</strong> Watch live sports events. <a href="https://www.skysports.com/watch" target="_blank">Visit Sky Sports Live</a></li>
+        <li><strong>BT Sport Live:</strong> Live streaming of sports events. <a href="https://www.bt.com/sport/watch" target="_blank">Visit BT Sport Live</a></li>
+        <li><strong>DAZN:</strong> Global sports streaming service. <a href="https://www.dazn.com/" target="_blank">Visit DAZN</a></li>
+      </ul>
+    </section>
+    
+    <!-- Image Converters Section -->
+    <section id="Image-Converters" class="tab-content">
+      <h2>Image Converters</h2>
+      <ul>
+        <li><strong>Convertio:</strong> Free online file converter. <a href="https://convertio.co/" target="_blank">Visit Convertio</a></li>
+        <li><strong>Zamzar:</strong> Online conversion service. <a href="https://www.zamzar.com/" target="_blank">Visit Zamzar</a></li>
+        <li><strong>Online-Convert:</strong> Conversion tools for various file types. <a href="https://www.online-convert.com/" target="_blank">Visit Online-Convert</a></li>
+        <li><strong>CloudConvert:</strong> Versatile converter for images, audio, video, and documents. <a href="https://cloudconvert.com/" target="_blank">Visit CloudConvert</a></li>
+        <li><strong>ILoveIMG:</strong> Free online image editing and conversion tools. <a href="https://www.iloveimg.com/" target="_blank">Visit ILoveIMG</a></li>
+        <li><strong>FreeConvert:</strong> Free converter with image support. <a href="https://www.freeconvert.com/" target="_blank">Visit FreeConvert</a></li>
+        <li><strong>AnyConv:</strong> Converter supporting multiple image formats. <a href="https://anyconv.com/" target="_blank">Visit AnyConv</a></li>
+      </ul>
+    </section>
+    
+    <!-- Technologies Section -->
+    <section id="Technologies" class="tab-content">
+      <h2>Technologies</h2>
+      <ul>
+        <li><strong>Artificial Intelligence:</strong> Latest research and trends. <a href="https://www.openai.com/" target="_blank">Visit OpenAI</a></li>
+        <li><strong>Blockchain & Cryptocurrency:</strong> Updates on blockchain and digital currencies. <a href="https://www.coindesk.com/" target="_blank">Visit CoinDesk</a></li>
+        <li><strong>Cloud Computing:</strong> Innovations in cloud services. <a href="https://aws.amazon.com/" target="_blank">Visit AWS</a></li>
+        <li><strong>Virtual & Augmented Reality:</strong> Immersive technologies. <a href="https://www.oculus.com/" target="_blank">Visit Oculus</a></li>
+        <li><strong>Internet of Things (IoT):</strong> Connecting smart devices. <a href="https://www.iotforall.com/" target="_blank">Visit IoT For All</a></li>
+        <li><strong>Robotics & Automation:</strong> Advances transforming industries. <a href="https://spectrum.ieee.org/robotics" target="_blank">Visit IEEE Robotics</a></li>
+        <li><strong>Cybersecurity:</strong> Protecting digital assets. <a href="https://www.darkreading.com/" target="_blank">Visit Dark Reading</a></li>
+        <li><strong>Quantum Computing:</strong> The future of computing. <a href="https://www.ibm.com/quantum-computing/" target="_blank">Visit IBM Quantum</a></li>
+      </ul>
+<ul>
+    <li><a href="https://grok3.io/" target="_blank">Grok 3</a>: A groundbreaking AI-powered project designed to revolutionize the crypto space, integrating advanced artificial intelligence with the Solana blockchain.</li>
+    <li><a href="https://www.geeksforgeeks.org/top-new-technology-trends/" target="_blank">Top 25 New Technology Trends in 2025</a>: GeeksforGeeks discusses emerging technologies expected to shape 2025.</li>
+    <li><a href="https://www.technologyreview.com/2025/01/03/1109178/10-breakthrough-technologies-2025/" target="_blank">10 Breakthrough Technologies 2025</a>: MIT Technology Review's top anticipated technological advancements for 2025.</li>
+    <li><a href="https://www.startus-insights.com/innovators-guide/technology-trends-to-watch/" target="_blank">Top 10 Technology Trends to Watch [2025]</a>: StartUs Insights' overview of key technology trends for 2025.</li>
+    <li><a href="https://www.analyticsinsight.net/tech-news/top-25-emerging-technologies-to-watch-in-2025" target="_blank">Top 25 Emerging Technologies to Watch in 2025</a>: Analytics Insight’s list of emerging technologies for 2025.</li>
+    <li><a href="https://technologymagazine.com/articles/top-10-trends-of-2025" target="_blank">Top 10: Trends of 2025</a>: Technology Magazine’s breakdown of the top tech trends for 2025.</li>
+    <li><a href="https://www.gartner.com/en/articles/top-technology-trends-2025" target="_blank">Gartner Top 10 Strategic Technology Trends for 2025</a>: Gartner's insights into key tech trends for 2025.</li>
+    <li><a href="https://www.capgemini.com/insights/research-library/top-tech-trends-2025/" target="_blank">Top Tech Trends of 2025</a>: Capgemini’s report on the most significant emerging technologies.</li>
+    <li><a href="https://cambridgeopenacademy.com/top-10-technology-trends-in-2025/" target="_blank">Top 10 Technology Trends in 2025 That Will Shape The Next Decade</a>: Cambridge Open Academy’s examination of future tech trends.</li>
+</ul>
+
+    </section>
+    
+    <!-- Office & Email Software Section -->
+    <section id="Office-Email" class="tab-content">
+      <h2>Office & Email Software</h2>
+      <h3>Office Applications</h3>
+      <ul>
+        <li><strong>Microsoft Word:</strong> Word processing software. <a href="https://www.microsoft.com/en-us/microsoft-365/word" target="_blank">Visit Word</a></li>
+        <li><strong>Microsoft Excel:</strong> Spreadsheet software. <a href="https://www.microsoft.com/en-us/microsoft-365/excel" target="_blank">Visit Excel</a></li>
+        <li><strong>Microsoft PowerPoint:</strong> Presentation software. <a href="https://www.microsoft.com/en-us/microsoft-365/powerpoint" target="_blank">Visit PowerPoint</a></li>
+        <li><strong>LibreOffice:</strong> Free office suite. <a href="https://www.libreoffice.org/" target="_blank">Visit LibreOffice</a></li>
+      </ul>
+      <h3>Email Clients</h3>
+      <ul>
+        <li><strong>Microsoft Outlook:</strong> Email client by Microsoft. <a href="https://outlook.live.com/" target="_blank">Visit Outlook</a></li>
+        <li><strong>Gmail:</strong> Free email service by Google. <a href="https://mail.google.com/" target="_blank">Visit Gmail</a></li>
+        <li><strong>Mozilla Thunderbird:</strong> Open-source email client. <a href="https://www.thunderbird.net/" target="_blank">Visit Thunderbird</a></li>
+      </ul>
+    </section>
+    
+    <!-- Editing Software Section -->
+    <section id="Editing-Software" class="tab-content">
+      <h2>Editing Software</h2>
+      <h3>Video Editing Software</h3>
+      <ul>
+        <li><strong>Adobe Premiere Pro:</strong> Professional video editing software. <a href="https://www.adobe.com/products/premiere.html" target="_blank">Visit Premiere Pro</a></li>
+        <li><strong>Final Cut Pro:</strong> Advanced video editing for Mac. <a href="https://www.apple.com/final-cut-pro/" target="_blank">Visit Final Cut Pro</a></li>
+        <li><strong>DaVinci Resolve:</strong> Free video editing and color correction. <a href="https://www.blackmagicdesign.com/products/davinciresolve/" target="_blank">Visit DaVinci Resolve</a></li>
+        <li><strong>Sony Vegas Pro:</strong> Feature-rich video editing software. <a href="https://www.vegascreativesoftware.com/" target="_blank">Visit Sony Vegas Pro</a></li>
+        <li><strong>Filmora:</strong> Easy-to-use video editing software. <a href="https://filmora.wondershare.com/" target="_blank">Visit Filmora</a></li>
+      </ul>
+      <h3>Image Editing Software</h3>
+      <ul>
+        <li><strong>Adobe Photoshop:</strong> Industry-standard image editor. <a href="https://www.adobe.com/products/photoshop.html" target="_blank">Visit Photoshop</a></li>
+        <li><strong>GIMP:</strong> Free and open-source image editing. <a href="https://www.gimp.org/" target="_blank">Visit GIMP</a></li>
+        <li><strong>Affinity Photo:</strong> Professional image editing software. <a href="https://affinity.serif.com/en-us/photo/" target="_blank">Visit Affinity Photo</a></li>
+        <li><strong>Corel PaintShop Pro:</strong> Comprehensive photo editing suite. <a href="https://www.paintshoppro.com/" target="_blank">Visit PaintShop Pro</a></li>
+        <li><strong>Paint.NET:</strong> Free image editing software for Windows. <a href="https://www.getpaint.net/" target="_blank">Visit Paint.NET</a></li>
+      </ul>
+    </section>
+    
+    <!-- Remote Software Section -->
+    <section id="Remote-Software" class="tab-content">
+      <h2>Remote Software</h2>
+      <ul>
+        <li><strong>TeamViewer:</strong> Remote desktop and support. <a href="https://www.teamviewer.com/" target="_blank">Visit TeamViewer</a></li>
+        <li><strong>AnyDesk:</strong> Fast remote desktop software. <a href="https://anydesk.com/" target="_blank">Visit AnyDesk</a></li>
+        <li><strong>Chrome Remote Desktop:</strong> Free remote access via Chrome. <a href="https://remotedesktop.google.com/" target="_blank">Visit Chrome Remote Desktop</a></li>
+        <li><strong>Microsoft Remote Desktop:</strong> Built-in remote access for Windows. <a href="https://docs.microsoft.com/en-us/windows-server/remote/remote-desktop-services/clients/remote-desktop-clients" target="_blank">Visit Microsoft Remote Desktop</a></li>
+        <li><strong>LogMeIn:</strong> Remote access and support solution. <a href="https://www.logmein.com/" target="_blank">Visit LogMeIn</a></li>
+        <li><strong>Splashtop:</strong> High-performance remote desktop. <a href="https://www.splashtop.com/" target="_blank">Visit Splashtop</a></li>
+        <li><strong>Zoho Assist:</strong> Remote support tool. <a href="https://www.zoho.com/assist/" target="_blank">Visit Zoho Assist</a></li>
+        <li><strong>RealVNC (VNC Connect):</strong> Secure remote access software. <a href="https://www.realvnc.com/" target="_blank">Visit RealVNC</a></li>
+        <li><strong>ConnectWise Control:</strong> Remote support for IT professionals. <a href="https://www.connectwise.com/software/control" target="_blank">Visit ConnectWise Control</a></li>
+      </ul>
+    </section>
+    
+    <!-- VPN Software Section -->
+    <section id="VPN" class="tab-content">
+      <h2>VPN Software</h2>
+      <ul>
+        <li><strong>ExpressVPN:</strong> Top-rated VPN service. <a href="https://www.expressvpn.com/" target="_blank">Visit ExpressVPN</a></li>
+        <li><strong>NordVPN:</strong> Secure and fast VPN. <a href="https://nordvpn.com/" target="_blank">Visit NordVPN</a></li>
+        <li><strong>CyberGhost:</strong> User-friendly VPN with strong privacy. <a href="https://www.cyberghostvpn.com/" target="_blank">Visit CyberGhost</a></li>
+        <li><strong>Surfshark:</strong> VPN with unlimited devices. <a href="https://surfshark.com/" target="_blank">Visit Surfshark</a></li>
+        <li><strong>Private Internet Access (PIA):</strong> Affordable and secure VPN. <a href="https://www.privateinternetaccess.com/" target="_blank">Visit PIA</a></li>
+        <li><strong>ProtonVPN:</strong> Privacy-focused VPN by CERN scientists. <a href="https://protonvpn.com/" target="_blank">Visit ProtonVPN</a></li>
+        <li><strong>VyprVPN:</strong> VPN with strong encryption and its own servers. <a href="https://www.vyprvpn.com/" target="_blank">Visit VyprVPN</a></li>
+        <li><strong>Hotspot Shield:</strong> Fast VPN with free and premium options. <a href="https://www.hotspotshield.com/" target="_blank">Visit Hotspot Shield</a></li>
+        <li><strong>IPVanish:</strong> High-speed VPN with robust security. <a href="https://www.ipvanish.com/" target="_blank">Visit IPVanish</a></li>
+      </ul>
+    </section>
+    
+    <!-- Riders Section -->
+    <section id="Riders" class="tab-content">
+      <h2>Riders</h2>
+      <ul>
+        <li><strong>Uber:</strong> Global ride-sharing platform. <a href="https://www.uber.com/" target="_blank">Visit Uber</a></li>
+        <li><strong>Lyft:</strong> Popular ride-sharing service in the USA. <a href="https://www.lyft.com/" target="_blank">Visit Lyft</a></li>
+        <li><strong>Grab:</strong> Leading ride-sharing app in Southeast Asia. <a href="https://www.grab.com/" target="_blank">Visit Grab</a></li>
+        <li><strong>Ola:</strong> Popular ride-sharing service in India. <a href="https://www.olacabs.com/" target="_blank">Visit Ola</a></li>
+        <li><strong>Didi Chuxing:</strong> Major ride-sharing platform in China. <a href="https://www.didiglobal.com/" target="_blank">Visit Didi</a></li>
+        <li><strong>Bolt:</strong> Ride-hailing service available in multiple regions. <a href="https://bolt.eu/" target="_blank">Visit Bolt</a></li>
+        <li><strong>Careem:</strong> Leading ride-sharing service in the Middle East. <a href="https://www.careem.com/" target="_blank">Visit Careem</a></li>
+        <li><strong>Gojek:</strong> Multi-service app with ride-sharing (Indonesia). <a href="https://www.gojek.com/" target="_blank">Visit Gojek</a></li>
+        <li><strong>Yandex.Taxi:</strong> Ride-sharing popular in Russia and surrounding regions. <a href="https://taxi.yandex.com/" target="_blank">Visit Yandex.Taxi</a></li>
+        <li><strong>Bykea:</strong> Pakistan’s leading motorcycle-based ride-sharing and delivery service. <a href="https://bykea.com/" target="_blank">Visit Bykea</a></li>
+        <li><strong>inDrive:</strong> Innovative ride-sharing service with competitive fares. <a href="https://indrive.com/" target="_blank">Visit inDrive</a></li>
+        <li><strong>Yango:</strong> Fast and reliable ride-hailing service. <a href="https://yango.com/" target="_blank">Visit Yango</a></li>
+      </ul>
+    </section>
+    <!-- Darkweb Section -->
+    <section id="Darkweb" class="tab-content">
+      <h2>Darkweb</h2>
+        <li>
+          <strong>Darkweb Aggregator:</strong> A sample darkweb portal (requires Tor Browser).<br>
+         <a href="http://exampledarkweb.onion" target="_blank">Visit Dark Web Aggregator</a>
+        </li>
+    </section>
+    <!-- Games Section -->
+    <section id="Games" class="tab-content">
+      <h2>Games</h2>
+     <ul>
+    <li><a href="https://www.zelda.com/breath-of-the-wild/" target="_blank">The Legend of Zelda: Breath of the Wild</a></li>
+    <li><a href="https://supermario.nintendo.com/" target="_blank">Super Mario Odyssey</a></li>
+    <li><a href="https://www.rockstargames.com/reddeadredemption2" target="_blank">Red Dead Redemption 2</a></li>
+    <li><a href="https://thewitcher.com/en/witcher3" target="_blank">The Witcher 3: Wild Hunt</a></li>
+    <li><a href="https://www.rockstargames.com/V/" target="_blank">Grand Theft Auto V</a></li>
+    <li><a href="https://www.minecraft.net/" target="_blank">Minecraft</a></li>
+    <li><a href="https://www.epicgames.com/fortnite/en-US/home" target="_blank">Fortnite</a></li>
+    <li><a href="https://www.ea.com/games/apex-legends" target="_blank">Apex Legends</a></li>
+    <li><a href="https://www.leagueoflegends.com/" target="_blank">League of Legends</a></li>
+    <li><a href="https://www.dota2.com/home" target="_blank">Dota 2</a></li>
+    <li><a href="https://blog.counter-strike.net/" target="_blank">Counter-Strike: Global Offensive</a></li>
+    <li><a href="https://www.callofduty.com/modernwarfare" target="_blank">Call of Duty: Modern Warfare</a></li>
+    <li><a href="https://www.callofduty.com/warzone" target="_blank">Call of Duty: Warzone</a></li>
+    <li><a href="https://playoverwatch.com/" target="_blank">Overwatch</a></li>
+    <li><a href="https://www.ubisoft.com/game/rainbow-six/siege" target="_blank">Rainbow Six Siege</a></li>
+    <li><a href="https://playvalorant.com/" target="_blank">Valorant</a></li>
+    <li><a href="https://www.innersloth.com/games/among-us/" target="_blank">Among Us</a></li>
+    <li><a href="https://www.pubgmobile.com/en-US/" target="_blank">PUBG Mobile</a></li>
+    <li><a href="https://www.yallaludo.com/" target="_blank">Yalla Ludo</a></li>
+    <li><a href="https://www.ea.com/games/fifa/fifa-23" target="_blank">FIFA 23</a></li>
+    <li><a href="https://www.ea.com/games/madden-nfl/madden-nfl-23" target="_blank">Madden NFL 23</a></li>
+    <li><a href="https://nba.2k.com/2k23/" target="_blank">NBA 2K23</a></li>
+    <li><a href="https://www.rocketleague.com/" target="_blank">Rocket League</a></li>
+    <li><a href="https://www.cyberpunk.net/" target="_blank">Cyberpunk 2077</a></li>
+    <li><a href="https://www.ubisoft.com/game/assassins-creed/valhalla" target="_blank">Assassin’s Creed Valhalla</a></li>
+    <li><a href="https://www.playstation.com/en-us/games/god-of-war/" target="_blank">God of War (2018)</a></li>
+    <li><a href="https://www.guerrilla-games.com/play/horizon-zero-dawn" target="_blank">Horizon Zero Dawn</a></li>
+    <li><a href="https://www.residentevil.com/village/" target="_blank">Resident Evil Village</a></li>
+    <li><a href="https://ffvii-remake.square-enix-games.com/" target="_blank">Final Fantasy VII Remake</a></li>
+    <li><a href="https://www.smashbros.com/en_US/" target="_blank">Super Smash Bros. Ultimate</a></li>
+    <li><a href="https://animal-crossing.com/new-horizons/" target="_blank">Animal Crossing: New Horizons</a></li>
+    <li><a href="https://www.callofduty.com/blackopscoldwar" target="_blank">Call of Duty: Black Ops Cold War</a></li>
+    <li><a href="https://genshin.hoyoverse.com/en/" target="_blank">Genshin Impact</a></li>
+    <li><a href="https://www.ea.com/games/apex-legends" target="_blank">Apex Legends Mobile</a></li>
+    <li><a href="https://playvalorant.com/en-us/news/announcements/valorant-mobile-announced/" target="_blank">Valorant Mobile</a></li>
+    <li><a href="https://www.streetfighter.com/" target="_blank">Street Fighter V</a></li>
+    <li><a href="https://tekken.com/" target="_blank">Tekken 7</a></li>
+    <li><a href="https://www.mortalkombat.com/" target="_blank">Mortal Kombat 11</a></li>
+    <li><a href="https://soulcalibur.com/" target="_blank">SoulCalibur VI</a></li>
+    <li><a href="https://forza.net/horizon5" target="_blank">Forza Horizon 5</a></li>
+    <li><a href="https://www.gran-turismo.com/us/products/gt7/" target="_blank">Gran Turismo 7</a></li>
+    <li><a href="https://www.ea.com/games/need-for-speed/need-for-speed-heat" target="_blank">Need for Speed: Heat</a></li>
+    <li><a href="https://www.ea.com/games/the-sims/the-sims-4" target="_blank">The Sims 4</a></li>
+    <li><a href="https://civilization.com/" target="_blank">Civilization VI</a></li>
+    <li><a href="https://www.ageofempires.com/games/aoeiv/" target="_blank">Age of Empires IV</a></li>
+    <li><a href="https://starcraft2.com/en-us/" target="_blank">StarCraft II</a></li>
+    <li><a href="https://www.halowaypoint.com/" target="_blank">Halo Infinite</a></li>
+    <li><a href="https://www.bungie.net/7/en/Destiny" target="_blank">Destiny 2</a></li>
+    <li><a href="https://www.warframe.com/" target="_blank">Warframe</a></li>
+    <li><a href="https://www.seaofthieves.com/" target="_blank">Sea of Thieves</a></li>
+    <li><a href="https://www.minecraft.net/en-us/about-dungeons" target="_blank">Minecraft Dungeons</a></li>
+    <li><a href="https://www.fallguys.com/" target="_blank">Fall Guys: Ultimate Knockout</a></li>
+    <li><a href="https://store.steampowered.com/app/739630/Phasmophobia/" target="_blank">Phasmophobia</a></li>
+    <li><a href="https://deadbydaylight.com/" target="_blank">Dead by Daylight</a></li>
+    <li><a href="https://endnightgames.com/games/the-forest" target="_blank">The Forest</a></li>
+    <li><a href="https://unknownworlds.com/subnautica/" target="_blank">Subnautica</a></li>
+    <li><a href="https://www.nomanssky.com/" target="_blank">No Man's Sky</a></li>
+    <li><a href="https://www.ksp2.com/" target="_blank">Kerbal Space Program</a></li>
+    <li><a href="https://eurotrucksimulator2.com/" target="_blank">Euro Truck Simulator 2</a></li>
+    <li><a href="https://americantrucksimulator.com/" target="_blank">American Truck Simulator</a></li>
+</ul>      
+    </section>
+    <!-- User Guide Section -->
+    <section id="User-Guide" class="tab-content">
+      <h2>User Guide</h2>
+      <p>Welcome to the Fuzionara Portal! This guide explains how to use all the features available:</p>
+      <ul>
+        <li><strong>Navigation:</strong> Use the tabs above to switch between different categories.</li>
+        <li><strong>Voice Commands:</strong> Click the mic button and speak commands like "AI Tools", "Open Gmail", "VPN", etc. You can also say "open [item]" to directly open a link.</li>
+        <li><strong>Software Links:</strong> Click on any software name to visit its official website or download page.</li>
+      </ul>
+      <p>For a detailed explanation, download the full user guide book <a href="https://example.com/fuzionara-user-guide.pdf" target="_blank">here</a>.</p>
+    </section>
+  </main>
+  <footer>
+    Developed By Fuzionara Channel
+  </footer>
+  <script>
+    // Tab switching functionality
+    document.querySelectorAll('.tab-button').forEach(button => {
+      button.addEventListener('click', () => {
+        document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+        button.classList.add('active');
+        document.getElementById(button.getAttribute('data-tab')).classList.add('active');
+      });
+      });
+    
+    // Global speech recognition functionality using Web Speech API
+    const micButton = document.getElementById('mic-button');
+    let recognitionActive = false;
+    let recognition;
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+      micButton.disabled = true;
+      micButton.title = "Speech Recognition not supported in this browser";
+    } else {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      recognition = new SpeechRecognition();
+      recognition.lang = "en-US";
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      recognition.onresult = function(event) {
+        let transcript = event.results[0][0].transcript.trim().toLowerCase();
+        if (transcript.includes("ai tools") || transcript.includes("chatbots")) {
+          document.querySelector('[data-tab="AI-Tools"]').click();
+        } else if (transcript.includes("social media")) {
+          document.querySelector('[data-tab="Social-Media"]').click();
+        } else if (transcript.includes("news channels")) {
+          document.querySelector('[data-tab="News-Channels"]').click();
+        } else if (transcript.includes("global banks")) {
+          document.querySelector('[data-tab="Global-Banks"]').click();
+        } else if (transcript.includes("pakistani banks")) {
+          document.querySelector('[data-tab="Pakistani-Banks"]').click();
+        } else if (transcript.includes("mobile wallets")) {
+          document.querySelector('[data-tab="Mobile-Wallets"]').click();
+        } else if (transcript.includes("browsers")) {
+          document.querySelector('[data-tab="Browsers"]').click();
+        } else if (transcript.includes("azad kashmir") || transcript.includes("azad")) {
+          document.querySelector('[data-tab="Azad-Kashmir"]').click();
+        } else if (transcript.includes("online stores")) {
+          document.querySelector('[data-tab="Online-Stores"]').click();
+        } else if (transcript.includes("sports channels")) {
+          document.querySelector('[data-tab="Sports-Channels"]').click();
+        } else if (transcript.includes("image converters")) {
+          document.querySelector('[data-tab="Image-Converters"]').click();
+        } else if (transcript.includes("technologies")) {
+          document.querySelector('[data-tab="Technologies"]').click();
+               } else if (transcript.includes("office") || transcript.includes("email")) {
+          document.querySelector('[data-tab="Office-Email"]').click();
+        } else if (transcript.includes("editing software") || transcript.includes("video editing") || transcript.includes("image editing")) {
+          document.querySelector('[data-tab="Editing-Software"]').click();
+        } else if (transcript.includes("remote software")) {
+          document.querySelector('[data-tab="Remote-Software"]').click();
+        } else if (transcript.includes("vpn")) {
+          document.querySelector('[data-tab="VPN"]').click();
+        } else if (transcript.includes("riders")) {
+          document.querySelector('[data-tab="Riders"]').click();
+        } else if (transcript.includes("darkweb") || transcript.includes("dark web")) {
+          document.querySelector('[data-tab="Darkweb"]').click();
+        } else if (transcript.includes("games")) {
+          document.querySelector('[data-tab="Games"]').click();
+        } else if (transcript.includes("user guide") || transcript.includes("book")) {
+          document.querySelector('[data-tab="User-Guide"]').click();
+        } else if (transcript.startsWith("open ")) {
+          let query = transcript.replace("open ", "").trim();
+          let activeContent = document.querySelector('.tab-content.active');
+          let anchors = activeContent.getElementsByTagName('a');
+          for (let i = 0; i < anchors.length; i++) {
+            if (anchors[i].textContent.toLowerCase().includes(query)) {
+              anchors[i].click();
+              return;
+            }
+          }
+          alert("No item found matching: " + query);
+        } else {
+          alert("Command not recognized: " + transcript);
+        }
+      };
+      recognition.onerror = function(event) {
+        console.error("Speech recognition error:", event.error);
+      };
+      recognition.onend = function() { recognitionActive = false; };
+    }
+    micButton.addEventListener('click', () => {
+      startMicMonitoring();
+      micButton.innerText = "Listening...";
+    });
+  
+    // Automatic mic activation using Web Audio API
+    let audioContext, analyser, microphone, javascriptNode;
+    let micMonitoringStarted = false;
+    function startMicMonitoring() {
+      if (micMonitoringStarted) return;
+      micMonitoringStarted = true;
+      navigator.mediaDevices.getUserMedia({ audio: true })
+        .then(stream => {
+          audioContext = new (window.AudioContext || window.webkitAudioContext)();
+          microphone = audioContext.createMediaStreamSource(stream);
+          analyser = audioContext.createAnalyser();
+          analyser.fftSize = 1024;
+          microphone.connect(analyser);
+          javascriptNode = audioContext.createScriptProcessor(2048, 1, 1);
+          analyser.connect(javascriptNode);
+          javascriptNode.connect(audioContext.destination);
+          javascriptNode.onaudioprocess = function() {
+            let array = new Uint8Array(analyser.frequencyBinCount);
+            analyser.getByteFrequencyData(array);
+            let values = 0;
+            for (let i = 0; i < array.length; i++) { values += array[i]; }
+            let average = values / array.length;
+            if (average > 20 && !recognitionActive && recognition) {
+              recognitionActive = true;
+              recognition.start();
+            }
+          };
+        })
+        .catch(err => {
+          console.error('Error accessing microphone:', err);
+        });
+    }
+  
+    // Voice search functionality for Google search bar
+    document.getElementById('voice-search-button').addEventListener('click', function() {
+      if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+        alert("Speech recognition not supported in this browser.");
+        return;
+      }
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const searchRecognition = new SpeechRecognition();
+      searchRecognition.lang = "en-US";
+      searchRecognition.interimResults = false;
+      searchRecognition.onresult = function(event) {
+        let transcript = event.results[0][0].transcript.trim();
+        document.getElementById('google-search-input').value = transcript;
+      };
+      searchRecognition.start();
+    });
+  
+    // Camera search functionality – trigger file input and auto-submit image search form
+    document.getElementById('camera-search-button').addEventListener('click', function() {
+      document.getElementById('camera-input').click();
+    });
+    document.getElementById('camera-input').addEventListener('change', function() {
+      document.getElementById('image-search-form').submit();
+    });
+  
+     </body>
+</html>
